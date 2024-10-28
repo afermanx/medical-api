@@ -1,0 +1,28 @@
+service: medical-api
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: '*'
+
+functions:
+  buscarAgendas:
+    handler: src/agenda/controller.getAgendas 
+    events:
+      - http:
+          path: agendas 
+          method: get
+
+  postAgendamento:
+    handler: src/agendamento/controller.postAgendamento
+    events:
+      - http:
+          path: agendamento
+          method: post
+
+plugins:
+  - serverless-offline
